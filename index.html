@@ -74,7 +74,7 @@ const text2 = document.getElementById("text2");
 // INITIAL COLOR
 text1.style.color = teams[0].color;
 
-// LOOP EVERY 30 SECONDS
+// LOOP EVERY 10 SECONDS
 setInterval(() => {
 
   index = (index + 1) % teams.length;
@@ -101,7 +101,7 @@ setInterval(() => {
     text2.className = "text next";
   }, 500);
 
-}, 30000); // 30 seconds
+}, 30000); // 10 seconds
 </script>
 
 </body>
