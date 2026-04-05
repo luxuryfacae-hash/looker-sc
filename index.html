@@ -1,23 +1,164 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Test</title>
-  <style>
-    body {
-      margin: 0;
-      background: red;
-      color: white;
-      font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      font-size: 40px;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Luxury Facilities Popup</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* POPUP */
+.popup {
+  position: fixed;
+  bottom: -400px;
+  right: 20px;
+  width: 360px;
+  background: linear-gradient(135deg, #092758, #0d3c8f);
+  color: #fff;
+  border-radius: 18px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  overflow: hidden;
+  z-index: 9999;
+  transition: all 0.6s ease;
+}
+
+.popup.show {
+  bottom: 20px;
+}
+
+/* HEADER */
+.header {
+  padding: 14px;
+  font-weight: bold;
+  font-size: 16px;
+  background: rgba(255,255,255,0.08);
+}
+
+/* CONTENT */
+.content {
+  padding: 25px;
+  font-size: 20px;
+  text-align: center;
+  min-height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.4s;
+}
+
+/* BUTTONS */
+.btn {
+  display: block;
+  margin: 10px auto;
+  padding: 12px 20px;
+  background: #ffffff;
+  color: #092758;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: bold;
+  width: fit-content;
+}
+
+/* WHATSAPP */
+.whatsapp {
+  display: block;
+  margin: 10px auto 20px;
+  padding: 10px 18px;
+  background: #25D366;
+  color: #fff;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: bold;
+  width: fit-content;
+}
+
+/* CLOSE */
+.close {
+  position: absolute;
+  top: 6px;
+  right: 10px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* MOBILE */
+@media(max-width:480px){
+  .popup{
+    left:10px;
+    right:10px;
+    width:auto;
+  }
+}
+</style>
 </head>
+
 <body>
-  TEST PAGE WORKING
+
+<div class="popup" id="popup">
+  <div class="close" onclick="closePopup()">×</div>
+  <div class="header">Luxury Facilities</div>
+
+  <div class="content" id="message">
+    Up to 65% hotel discounts
+  </div>
+
+  <a class="btn" href="https://luxuryfac.ae" target="_blank">View Offers</a>
+
+  <a class="whatsapp" href="https://wa.me/971508884071" target="_blank">
+    Chat on WhatsApp
+  </a>
+</div>
+
+<script>
+// ===== MESSAGES =====
+const messages = [
+  "Up to 65% hotel discounts",
+  "Restaurant discounts up to 35%",
+  "Travel packages up to 40% OFF",
+  "Clinic & gym exclusive deals",
+  "Join now & unlock premium benefits"
+];
+
+let index = 0;
+const messageBox = document.getElementById("message");
+
+// ===== ROTATION (5 MINUTES) =====
+setInterval(() => {
+  messageBox.style.opacity = 0;
+
+  setTimeout(() => {
+    index = (index + 1) % messages.length;
+    messageBox.textContent = messages[index];
+    messageBox.style.opacity = 1;
+  }, 400);
+
+}, 300000); // 5 minutes
+
+// ===== SHOW AFTER 5 SECONDS =====
+window.onload = () => {
+  if (!localStorage.getItem("popupShown")) {
+    setTimeout(() => {
+      document.getElementById("popup").classList.add("show");
+      localStorage.setItem("popupShown", "true");
+
+      // expire after 24h
+      setTimeout(() => {
+        localStorage.removeItem("popupShown");
+      }, 86400000);
+
+    }, 5000);
+  }
+};
+
+// ===== CLOSE =====
+function closePopup(){
+  document.getElementById("popup").style.display = "none";
+}
+</script>
+
 </body>
 </html>
