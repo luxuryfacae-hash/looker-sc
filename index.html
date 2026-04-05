@@ -12,25 +12,39 @@ body {
   font-family: Arial, sans-serif;
 }
 
-/* SMALL FLOATING BOX */
+/* CONTAINER */
 .widget {
   position: fixed;
   bottom: 10px;
   right: 10px;
-  padding: 12px 18px;
-  border-radius: 12px;
-  color: #fff;
-  font-size: 14px;
-  font-weight: 600;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-  min-width: 180px;
+  height: 30px;
+  overflow: hidden;
+  min-width: 200px;
+}
+
+/* TEXT STYLE */
+.text {
+  position: absolute;
+  width: 100%;
   text-align: center;
-  transition: all 0.4s ease;
+  font-size: 15px;
+  font-weight: bold;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+/* ANIMATION STATES */
+.current {
+  transform: translateY(0);
   opacity: 1;
 }
 
-/* SMOOTH TRANSITION */
-.fade {
+.next {
+  transform: translateY(100%);
+  opacity: 0;
+}
+
+.slide-up {
+  transform: translateY(-100%);
   opacity: 0;
 }
 </style>
@@ -38,38 +52,54 @@ body {
 
 <body>
 
-<div class="widget" id="widget">
-  اسبوع القوة(روز )
+<div class="widget">
+  <div id="text1" class="text current">Ataa Team Week</div>
+  <div id="text2" class="text next"></div>
 </div>
 
 <script>
-// TEAM DATA
 const teams = [
-  { name: "اسبوع القوة(روز )", color: "#f39c12" },
-  { name: "اسبوع التحدي(جوري )", color: "#5dade2" },
-  { name: "اسبوع الطاقه والانجاز (ياسمين قروب )", color: "#76d7c4" },
-  { name: "اسبوع تحطيم الارقام 💪🏽(اوركيد قروب )", color: "#bb8fce" },
-  { name: "أسبوع انجز وارتاح (لافندر)", color: "#ec7063" }
+  { name: "Ataa Team Week", color: "#f39c12" },
+  { name: "Zeinab Team Week", color: "#5dade2" },
+  { name: "Shaimaa Team Week", color: "#76d7c4" },
+  { name: "Esraa Team Week", color: "#bb8fce" },
+  { name: "Hana Team Week", color: "#ec7063" }
 ];
 
 let index = 0;
-const widget = document.getElementById("widget");
 
-// INITIAL
-widget.style.background = teams[0].color;
+const text1 = document.getElementById("text1");
+const text2 = document.getElementById("text2");
 
-// CONTINUOUS LOOP (NO DELAY)
+// INITIAL COLOR
+text1.style.color = teams[0].color;
+
+// LOOP EVERY 30 SECONDS
 setInterval(() => {
-  widget.classList.add("fade");
 
+  index = (index + 1) % teams.length;
+
+  // Prepare next text
+  text2.textContent = teams[index].name;
+  text2.style.color = teams[index].color;
+
+  // Reset position
+  text2.className = "text next";
+
+  // Trigger animation
   setTimeout(() => {
-    index = (index + 1) % teams.length;
+    text1.className = "text slide-up";
+    text2.className = "text current";
+  }, 50);
 
-    widget.textContent = teams[index].name;
-    widget.style.background = teams[index].color;
+  // Swap after animation
+  setTimeout(() => {
+    text1.textContent = text2.textContent;
+    text1.style.color = text2.style.color;
 
-    widget.classList.remove("fade");
-  }, 200);
+    text1.className = "text current";
+    text2.className = "text next";
+  }, 500);
 
 }, 30000); // 30 seconds
 </script>
