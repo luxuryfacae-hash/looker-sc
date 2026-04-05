@@ -1,134 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>5-Line Rotating Popup</title>
+  <meta charset="UTF-8">
+  <title>Test</title>
   <style>
     body {
       margin: 0;
+      background: red;
+      color: white;
       font-family: Arial, sans-serif;
-      background: #f4f4f4;
-      min-height: 100vh;
-    }
-
-    .popup-box {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 360px;
-      min-height: 160px;
-      background: #092758;
-      color: #ffffff;
-      border-radius: 16px;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.25);
-      overflow: hidden;
-      z-index: 9999;
-      animation: slideUp 0.5s ease;
-    }
-
-    .popup-header {
-      background: rgba(255,255,255,0.08);
-      padding: 12px 16px;
-      font-size: 16px;
-      font-weight: bold;
-    }
-
-    .popup-content {
-      padding: 24px 18px;
-      font-size: 20px;
-      line-height: 1.5;
-      min-height: 80px;
       display: flex;
-      align-items: center;
       justify-content: center;
-      text-align: center;
-      transition: opacity 0.4s ease;
-    }
-
-    .popup-footer {
-      padding: 10px 16px 16px;
-      text-align: center;
-    }
-
-    .popup-footer a {
-      display: inline-block;
-      padding: 10px 16px;
-      background: #ffffff;
-      color: #092758;
-      text-decoration: none;
-      font-weight: bold;
-      border-radius: 10px;
-      font-size: 14px;
-    }
-
-    .close-btn {
-      position: absolute;
-      top: 8px;
-      right: 10px;
-      background: transparent;
-      border: none;
-      color: #ffffff;
-      font-size: 20px;
-      cursor: pointer;
-    }
-
-    @keyframes slideUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @media (max-width: 480px) {
-      .popup-box {
-        left: 12px;
-        right: 12px;
-        width: auto;
-        bottom: 12px;
-      }
+      align-items: center;
+      height: 100vh;
+      font-size: 40px;
     }
   </style>
 </head>
 <body>
-
-  <div class="popup-box" id="popupBox">
-    <button class="close-btn" onclick="document.getElementById('popupBox').style.display='none'">&times;</button>
-    <div class="popup-header">Luxury Facilities Offer</div>
-    <div class="popup-content" id="popupMessage">
-      Up to 65% hotel discounts
-    </div>
-    <div class="popup-footer">
-      <a href="https://luxuryfac.ae" target="_blank">View Offer</a>
-    </div>
-  </div>
-
-  <script>
-    const messages = [
-      "Up to 65% hotel discounts",
-      "Exclusive restaurant offers",
-      "Travel packages with special savings",
-      "Premium clinic and gym benefits",
-      "Register now and unlock member deals"
-    ];
-
-    let index = 0;
-    const messageBox = document.getElementById("popupMessage");
-
-    setInterval(() => {
-      messageBox.style.opacity = 0;
-
-      setTimeout(() => {
-        index = (index + 1) % messages.length;
-        messageBox.textContent = messages[index];
-        messageBox.style.opacity = 1;
-      }, 400);
-    }, 2500);
-  </script>
-
+  TEST PAGE WORKING
 </body>
 </html>
