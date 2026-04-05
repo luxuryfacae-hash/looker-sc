@@ -3,67 +3,75 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Team Rotation Popup</title>
+<title>Team Widget</title>
 
 <style>
 body {
   margin: 0;
+  background: transparent;
   font-family: Arial, sans-serif;
 }
 
-/* POPUP */
-.popup {
+/* SMALL FLOATING BOX */
+.widget {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
-  padding: 25px 30px;
-  border-radius: 16px;
+  bottom: 10px;
+  right: 10px;
+  padding: 12px 18px;
+  border-radius: 12px;
   color: #fff;
-  font-size: 20px;
-  font-weight: bold;
-  box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-  transition: all 0.5s ease;
-  min-width: 280px;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  min-width: 180px;
   text-align: center;
+  transition: all 0.4s ease;
+  opacity: 1;
+}
+
+/* SMOOTH TRANSITION */
+.fade {
+  opacity: 0;
 }
 </style>
-
 </head>
 
 <body>
 
-<div class="popup" id="popup">
+<div class="widget" id="widget">
   Ataa Team Week
 </div>
 
 <script>
-const data = [
-  { text: "Ataa Team Week", color: "#f39c12" },     // Orange
-  { text: "Zeinab Team Week", color: "#5dade2" },   // Sky Blue
-  { text: "Shaimaa Team Week", color: "#76d7c4" },  // Light Blue
-  { text: "Esraa Team Week", color: "#bb8fce" },    // Light Purple
-  { text: "Hana Team Week", color: "#ec7063" }      // Rose
+// TEAM DATA
+const teams = [
+  { name: "Ataa Team Week", color: "#f39c12" },
+  { name: "Zeinab Team Week", color: "#5dade2" },
+  { name: "Shaimaa Team Week", color: "#76d7c4" },
+  { name: "Esraa Team Week", color: "#bb8fce" },
+  { name: "Hana Team Week", color: "#ec7063" }
 ];
 
 let index = 0;
-const popup = document.getElementById("popup");
+const widget = document.getElementById("widget");
 
-// INITIAL COLOR
-popup.style.background = data[0].color;
+// INITIAL
+widget.style.background = teams[0].color;
 
-// ROTATION EVERY 5 MINUTES
+// CONTINUOUS LOOP (NO DELAY)
 setInterval(() => {
-  index = (index + 1) % data.length;
-
-  popup.style.opacity = 0;
+  widget.classList.add("fade");
 
   setTimeout(() => {
-    popup.textContent = data[index].text;
-    popup.style.background = data[index].color;
-    popup.style.opacity = 1;
-  }, 400);
+    index = (index + 1) % teams.length;
 
-}, 300000); // 5 minutes
+    widget.textContent = teams[index].name;
+    widget.style.background = teams[index].color;
+
+    widget.classList.remove("fade");
+  }, 200);
+
+}, 30000); // 30 seconds
 </script>
 
 </body>
