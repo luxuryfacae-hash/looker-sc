@@ -1,108 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Team Widget</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Team Slide Widget</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: transparent !important;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
 
-<style>
-body {
-  margin: 0;
-  background: transparent;
-  font-family: Arial, sans-serif;
-}
+    .widget {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      height: 28px;
+      min-width: 220px;
+      overflow: hidden;
+      background: transparent !important;
+    }
 
-/* CONTAINER */
-.widget {
-  position: fixed;
-  bottom: 10px;
-  right: 10px;
-  height: 30px;
-  overflow: hidden;
-  min-width: 200px;
-}
+    .text {
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 28px;
+      white-space: nowrap;
+      transform: translateY(100%);
+      opacity: 0;
+      transition: transform 0.55s ease, opacity 0.55s ease;
+      background: transparent !important;
+    }
 
-/* TEXT STYLE */
-.text {
-  position: absolute;
-  width: 100%;
-  text-align: center;
-  font-size: 15px;
-  font-weight: bold;
-  transition: transform 0.5s ease, opacity 0.5s ease;
-}
+    .current {
+      transform: translateY(0%);
+      opacity: 1;
+    }
 
-/* ANIMATION STATES */
-.current {
-  transform: translateY(0);
-  opacity: 1;
-}
+    .next {
+      transform: translateY(100%);
+      opacity: 0;
+    }
 
-.next {
-  transform: translateY(100%);
-  opacity: 0;
-}
-
-.slide-up {
-  transform: translateY(-100%);
-  opacity: 0;
-}
-</style>
+    .up {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+  </style>
 </head>
-
 <body>
+  <div class="widget">
+    <div id="line1" class="text current">Ataa Team Week</div>
+    <div id="line2" class="text next"></div>
+  </div>
 
-<div class="widget">
-  <div id="text1" class="text current">أسبوع القوة (روز)</div>
-  <div id="text2" class="text next"></div>
-</div>
+  <script>
+    const teams = [
+      { name: "Ataa Team Week", color: "#f39c12" },
+      { name: "Zeinab Team Week", color: "#5dade2" },
+      { name: "Shaimaa Team Week", color: "#76d7c4" },
+      { name: "Esraa Team Week", color: "#bb8fce" },
+      { name: "Hana Team Week", color: "#ec7063" }
+    ];
 
-<script>
-const teams = [
-  { name: "أسبوع القوة (روز)", color: "#f39c12" },
-  { name: "اسبوع التحدي(جوري)", color: "#5dade2" },
-  { name: "اسبوع الطاقه والانجاز (ياسمين)", color: "#76d7c4" },
-  { name: "اسبوع تحطيم الارقام 💪🏽(اوركيد)", color: "#bb8fce" },
-  { name: "أسبوع انجز وارتاح (لافندر)", color: "#ec7063" }
-];
+    let index = 0;
 
-let index = 0;
+    const line1 = document.getElementById("line1");
+    const line2 = document.getElementById("line2");
 
-const text1 = document.getElementById("text1");
-const text2 = document.getElementById("text2");
+    line1.style.color = teams[0].color;
 
-// INITIAL COLOR
-text1.style.color = teams[0].color;
+    function rotateLine() {
+      index = (index + 1) % teams.length;
 
-// LOOP EVERY 10 SECONDS
-setInterval(() => {
+      line2.textContent = teams[index].name;
+      line2.style.color = teams[index].color;
+      line2.className = "text next";
 
-  index = (index + 1) % teams.length;
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          line1.className = "text up";
+          line2.className = "text current";
+        });
+      });
 
-  // Prepare next text
-  text2.textContent = teams[index].name;
-  text2.style.color = teams[index].color;
+      setTimeout(() => {
+        line1.textContent = line2.textContent;
+        line1.style.color = line2.style.color;
+        line1.className = "text current";
+        line2.className = "text next";
+      }, 600);
+    }
 
-  // Reset position
-  text2.className = "text next";
-
-  // Trigger animation
-  setTimeout(() => {
-    text1.className = "text slide-up";
-    text2.className = "text current";
-  }, 50);
-
-  // Swap after animation
-  setTimeout(() => {
-    text1.textContent = text2.textContent;
-    text1.style.color = text2.style.color;
-
-    text1.className = "text current";
-    text2.className = "text next";
-  }, 500);
-
-}, 30000); // 10 seconds
-</script>
-
+    setInterval(rotateLine, 20000);
+  </script>
 </body>
 </html>
